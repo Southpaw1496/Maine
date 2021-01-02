@@ -1,19 +1,21 @@
-import discord
+from discord.ext import commands
+from discord import Embed
+from os import environ
+import requests
+bot = commands.Bot(command_prefix="£")
 
-client = discord.Client()
-
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print("Bot logged in")
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@bot.command()
+async def cat(context):
+    request = requests.get("https://api.thecatapi.com/v1/images/search")
+    requestJson = request.json()
+    embed = Embed()
+    embed.set_image(url=requestJson[0]["url"])
+    await context.send(embed=embed)
+    
 
-    if message.content.startswith('£cat'):
-        embed = discord.Embed()
-        embed.set_image(url="https://source.unsplash.com/random/?cat")
-        await message.channel.send(embed=embed)
 
-client.run(token)
+bot.run(environ.get("COON_BOT"))
