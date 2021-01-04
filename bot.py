@@ -18,6 +18,14 @@ async def cat(context):
     await context.send(embed=embed)
 
 @bot.command()
+async def dog(context):
+    request = requests.get("https://api.thedogapi.com/v1/images/search")
+    requestJson = request.json()
+    embed = Embed()
+    embed.set_image(url=requestJson[0]["url"])
+    await context.send(embed=embed)
+
+@bot.command()
 async def pineapple(context):
     request = requests.get("https://api.unsplash.com/photos/random/", params={"query": "Pineapple", "username": "pineapple"}, headers={"Authorization": unsplashToken} )
     requestJson = request.json()
