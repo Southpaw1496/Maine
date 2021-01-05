@@ -40,7 +40,7 @@ async def pineapple(context):
     await context.send(embed=embed)
 
 @bot.event
-async def on_message(summon):
+async def on_message(message):
     await bot.process_commands(message)
     if bot.user.mentioned_in(message):
         embed = Embed(colour=Colour.from_rgb(193, 0, 238))
