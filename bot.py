@@ -2,8 +2,12 @@ from discord.ext import commands
 from discord import Embed, Colour
 from os import environ
 import requests
-bot = commands.Bot(command_prefix="£")
+from discord import Intents
+intents = Intents.default()
+intents.members = True
+bot = commands.Bot(command_prefix="£", intents=intents)
 unsplashToken = environ.get("UNSPLASH_COON")
+intents.members = True
 
 @bot.event
 async def on_ready():
@@ -42,5 +46,16 @@ async def on_message(summon):
         embed = Embed(colour=Colour.from_rgb(193, 0, 238))
         embed.set_image(url="https://i.imgflip.com/3ia3r2.png")
         await summon.channel.send(embed=embed)
-
+    elif summon.content == "Silencio!":
+        if summon.message.author.server_permissions.manage_roles:
+            silencee = None
+            async for m in summon.channel.history():
+                if m.id != summon.message.id:
+                    silencee = m.author
+                    break
+            if silencee:
+                role = m.guild.get_role("Muted")
+                await silencee.add_roles(role)
+        
+            
 bot.run(environ.get("DISCORD_COON"))
