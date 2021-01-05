@@ -41,21 +41,22 @@ async def pineapple(context):
 
 @bot.event
 async def on_message(summon):
-    await bot.process_commands(summon)
-    if bot.user.mentioned_in(summon):
+    await bot.process_commands(message)
+    if bot.user.mentioned_in(message):
         embed = Embed(colour=Colour.from_rgb(193, 0, 238))
         embed.set_image(url="https://i.imgflip.com/3ia3r2.png")
-        await summon.channel.send(embed=embed)
-    elif summon.content == "Silencio!":
-        if summon.message.author.server_permissions.manage_roles:
+        await message.channel.send(embed=embed)
+    elif message.content == "Silencio!":
+        if message.message.author.server_permissions.manage_roles:
             silencee = None
-            async for m in summon.channel.history():
-                if m.id != summon.message.id:
+            async for m in message.channel.history():
+                if m.id != message.message.id:
                     silencee = m.author
                     break
             if silencee:
                 role = m.guild.get_role("Muted")
                 await silencee.add_roles(role)
+    
         
             
 bot.run(environ.get("DISCORD_COON"))
