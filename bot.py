@@ -38,6 +38,28 @@ async def pineapple(context):
     embed.set_image(url=requestJson["urls"]["regular"])
     embed.set_footer(text=f'Photo by {unsplashAuthor} on Unsplash')
     await context.send(embed=embed)
+@bot.command()
+async def lyrics(context, *, song):
+    request = requests.get("https://some-random-api.ml/lyrics", params={"title": song})
+    requestJson = request.json()
+    songTitle = requestJson["title"]
+    songAuthor = requestJson["author"]
+    songThumbnail = requestJson["thumbnail"]["genius"]
+    songLyrics = requestJson["lyrics"]
+    songLyricsLink = requestJson["links"] ["genius"]
+    if len(songLyrics) > 2000:
+        embed = Embed(
+            title = songTitle,
+            description = f"Your song was too long to fit in Discord! Lyrics are available at {songLyricsLink}"
+        )
+    else:
+        embed = Embed(
+        title = songTitle,
+        description = songLyrics,)
+        embed.set_footer = f"Source: {songLyricsLink}"
+    embed.set_author(name=songAuthor)
+    embed.set_thumbnail(url=songThumbnail)
+    await context.send(embed=embed)
 
 @bot.event
 async def on_message(message):
