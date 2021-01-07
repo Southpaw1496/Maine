@@ -61,6 +61,15 @@ async def lyrics(context, *, song):
     embed.set_thumbnail(url=songThumbnail)
     await context.send(embed=embed)
 
+@bot.command()
+async def help(context, command=None):
+    if help == None:
+        embed = Embed(
+            title = "Help menu",
+            description = "The bot's Help menu"
+        )    
+        embed.add_field(name="Available Commands:\n- help: Displays this message\n- cat: Displays a random photo of a cat, courtesy of The Cat API\n- dog: Displays a random photo of a dog, courtesy of The Dog API\n- pineapple: Displays a random photo of a pineapple, courtesy of Unsplash, because yes\n- lyrics: Displays the lyrics of a song, courtesy of That Random API and Genius (usage `lyrics song`)")
+        await context.send(embed=embed)
 @bot.event
 async def on_message(message):
     await bot.process_commands(message)
