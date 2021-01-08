@@ -69,7 +69,7 @@ async def lyrics(context, *, song):
         embed = Embed(
         title = songTitle,
         description = songLyrics,)
-        embed.set_footer = f"Source: {songLyricsLink}"
+        embed.set_footer(text=f"Source: {songLyricsLink}")
     embed.set_author(name=songAuthor)
     embed.set_thumbnail(url=songThumbnail)
     await context.send(embed=embed)
@@ -91,5 +91,5 @@ async def on_message(message):
             if silencee:
                 role = m.guild.get_role("Muted")
                 await silencee.add_roles(role)
-                           
+
 bot.run(environ.get("DISCORD_COON"))
