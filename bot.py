@@ -41,6 +41,17 @@ async def pineapple(context):
     embed.set_footer(text=f'Photo by {unsplashAuthor} on Unsplash ({unsplashAuthorUrl})')
     await context.send(embed=embed)
 @bot.command()
+async def melon(context):
+    request = requests.get("https://api.unsplash.com/photos/random/", params={"query": "Melon"}, headers={"Authorization": unsplashToken} )
+    requestJson = request.json()
+    unsplashAuthor = requestJson["user"]["name"]
+    unsplashAuthorUrl = requestJson["user"]["links"]["html"]
+    print(unsplashAuthorUrl)
+    embed = Embed()
+    embed.set_image(url=requestJson["urls"]["regular"])
+    embed.set_footer(text=f'Photo by {unsplashAuthor} on Unsplash ({unsplashAuthorUrl})')
+    await context.send(embed=embed)
+@bot.command()
 async def lyrics(context, *, song):
     request = requests.get("https://some-random-api.ml/lyrics", params={"title": song})
     requestJson = request.json()
@@ -80,7 +91,5 @@ async def on_message(message):
             if silencee:
                 role = m.guild.get_role("Muted")
                 await silencee.add_roles(role)
-    
-        
-            
+                           
 bot.run(environ.get("DISCORD_COON"))
