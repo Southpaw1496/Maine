@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from discord import Embed, Colour
 from os import environ
@@ -74,6 +75,18 @@ async def lyrics(context, *, song):
     embed.set_thumbnail(url=songThumbnail)
     await context.send(embed=embed)
 
+@bot.command()
+async def hug(context, username : discord.Member=None):
+    if username == None:
+        embed = Embed(
+            title = f"{context.author.mention} Have a hug!"
+        )
+    else:
+        embed = Embed(
+            title= f"{username.mention} Have a hug from {context.author.name}"
+        )
+    embed.set_image(url="https://tenor.com/view/milk-and-mocha-hug-cute-kawaii-love-gif-12535134"])
+    await context.send(embed=embed)
 
 async def on_message(message):
     await bot.process_commands(message)
