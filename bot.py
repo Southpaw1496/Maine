@@ -77,16 +77,12 @@ async def lyrics(context, *, song):
 
 @bot.command()
 async def hug(context, username : discord.Member=None):
+    embed = Embed()
+    embed.set_image(url="https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134")
     if username == None:
-        embed = Embed(
-            title = f"{context.author.mention} Have a hug!"
-        )
+        await context.send(embed=embed, content=f"{context.author.mention} Have a hug")
     else:
-        embed = Embed(
-            title= f"{username.mention} Have a hug from {context.author.name}"
-        )
-    embed.set_image(url="https://tenor.com/view/milk-and-mocha-hug-cute-kawaii-love-gif-12535134"])
-    await context.send(embed=embed)
+        await context.send(embed=embed, content=f"{username.mention} Have a hug from {context.author.mention}")
 
 async def on_message(message):
     await bot.process_commands(message)
