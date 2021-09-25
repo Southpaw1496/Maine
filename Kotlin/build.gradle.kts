@@ -8,6 +8,8 @@ plugins {
     id("com.github.jakemarsden.git-hooks")
     id("com.github.johnrengelman.shadow")
     id("io.gitlab.arturbosch.detekt")
+    kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
 }
 
 group = "template"
@@ -21,6 +23,7 @@ repositories {
         name = "Kotlin Discord"
         url = uri("https://maven.kotlindiscord.com/repository/maven-public/")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -33,6 +36,8 @@ dependencies {
     implementation(libs.groovy)
     implementation(libs.logback)
     implementation(libs.logging)
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0-RC")
 }
 
 application {
@@ -70,4 +75,12 @@ java {
 detekt {
     buildUponDefaultConfig = true
     config = rootProject.files("detekt.yml")
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
