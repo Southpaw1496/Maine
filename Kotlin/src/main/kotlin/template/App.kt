@@ -9,7 +9,7 @@ import dev.kord.common.entity.Snowflake
 import template.extensions.TestExtension
 
 val TEST_SERVER_ID = Snowflake(
-    env("TEST_SERVER")?.toLong()  // Get the test server ID from the env vars or a .env file
+    env("TEST_SERVER").toLong() // Get the test server ID from the env vars or a .env fileerver ID from the env vars or a .env file
         ?: error("Env var TEST_SERVER not provided")
 )
 
@@ -18,8 +18,9 @@ private val TOKEN = env("TOKEN")   // Get the bot' token from the env vars or a 
 
 suspend fun main() {
     val bot = ExtensibleBot(TOKEN) {
-        messageCommands {
+        chatCommands {
             defaultPrefix = "?"
+            enabled = true
 
             prefix { default ->
                 if (guildId == TEST_SERVER_ID) {
@@ -30,10 +31,6 @@ suspend fun main() {
                     default
                 }
             }
-        }
-
-        slashCommands {
-            enabled = true
         }
 
         extensions {
