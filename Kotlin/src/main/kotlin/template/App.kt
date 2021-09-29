@@ -6,6 +6,7 @@ package template
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.entity.Snowflake
+import template.extensions.Maine
 import template.extensions.TestExtension
 
 val TEST_SERVER_ID = Snowflake(
@@ -35,6 +36,7 @@ suspend fun main() {
 
         extensions {
             add(::TestExtension)
+            add(::Maine)
         }
     }
 
