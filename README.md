@@ -1,2 +1,2 @@
-# Coon
-A little Discord bot for me to mess around with
+# Maine
+Maine (name WIP) is a bot that I wrote to help me learn coding languages. Every time I learn a new language, I rewrite it in that language. Currently, it is feature-complete in Python and I'm working on writing it it in Kotlin. Kotlin is written with KordEx, and Python is written using Discord.Py, which sadly is no longer in active development. Feel free to peer through and reuse the source code if you want.
