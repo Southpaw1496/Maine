@@ -16,6 +16,7 @@ import dev.kord.rest.builder.message.create.allowedMentions
 import dev.kord.rest.builder.message.create.embed
 import dev.kord.rest.builder.message.modify.embed
 import template.CatAPI
+import template.DogAPI
 import template.TEST_SERVER_ID
 import template.Unsplash
 import kotlin.time.Duration
@@ -58,6 +59,44 @@ class Maine : Extension() {
                                 message.edit {
                                     this.embed {
                                         image = CatAPI.random()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        publicSlashCommand {
+            name = "Dog"
+            description = "Get a random cat picture from the Dog API"
+
+
+            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
+
+            action {
+                // Because of the DslMarker annotation KordEx uses, we need to grab Kord explicitly
+                val kord = this@Maine.kord
+                lateinit var message: PublicFollowupMessage
+
+
+                message = respond {
+                    embed {
+                        image = DogAPI.random()
+                    }
+                    components(Duration.seconds(300)) {
+                        onTimeout {
+                            message.edit {
+                                components = mutableListOf()
+                            }
+                        }
+                        publicButton {
+                            label = "Get a new dog"
+                            emoji("🐶")
+                            action {
+                                message.edit {
+                                    this.embed {
+                                        image = DogAPI.random()
                                     }
                                 }
                             }
