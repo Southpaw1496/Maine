@@ -2,6 +2,7 @@ package template.extensions
 
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.optionalUser
+import com.kotlindiscord.kord.extensions.commands.converters.impl.string
 import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.components.components
 import com.kotlindiscord.kord.extensions.components.publicButton
@@ -9,16 +10,14 @@ import com.kotlindiscord.kord.extensions.components.types.emoji
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
+import dev.kord.cache.api.data.description
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.interaction.edit
 import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.rest.builder.message.create.allowedMentions
 import dev.kord.rest.builder.message.create.embed
 import dev.kord.rest.builder.message.modify.embed
-import template.CatAPI
-import template.DogAPI
-import template.TEST_SERVER_ID
-import template.Unsplash
+import template.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
@@ -189,7 +188,7 @@ class Maine : Extension() {
             guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
             action {
                 respond {
-                    if(arguments.receiver == null || arguments.receiver == user) {
+                    if (arguments.receiver == null || arguments.receiver == user) {
                         content = "${user.mention} Have a special hug from me ❤️"
                         embed {
                             image = "https://c.tenor.com/eAKshP8ZYWAAAAAC/cat-love.gif"
@@ -198,21 +197,64 @@ class Maine : Extension() {
                     } else {
                         content = "${arguments.receiver!!.mention} Have a hug from ${user.mention}"
                         embed {
-                            image = "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
+                            image =
+                                "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
                         }
                     }
                 }
             }
+        }
+        publicSlashCommand(::LyricsArgs)
+        {
+            name = "Lyrics"
+            description = "Find the lyrics of a song from Genius"
+
+            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
+            action {
+                val song = RandomAPI.lyrics(song = arguments.lyrics)
+                if(song.lyrics.length >= 2000) {
+                    respond {
+                        embed {
+                            description = "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                        }
+                    }
+                }
+                else {
+                    respond {
+                        embed {
+                            title = song.title
+                            author {
+                                name = song.author
+                            }
+                            thumbnail {
+                                url = song.thumbnail.genius
+                            }
+                            description = song.lyrics
+                            footer {
+                                text = "Source: ${song.links.genius}"
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 
     inner class HugArgs : Arguments() {
         val receiver by optionalUser(
             "receiver",
-            description = "Receiver of your hug",)
+            description = "Receiver of your hug",
+        )
 
 
+    }
 
+    inner class LyricsArgs : Arguments() {
+        val lyrics by string(
+            "song",
+            description = "Name of the song"
+        )
     }
 }
 
