@@ -3,20 +3,23 @@ package template.extensions
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.optionalUser
 import com.kotlindiscord.kord.extensions.commands.converters.impl.string
-import com.kotlindiscord.kord.extensions.commands.converters.impl.user
 import com.kotlindiscord.kord.extensions.components.components
 import com.kotlindiscord.kord.extensions.components.publicButton
 import com.kotlindiscord.kord.extensions.components.types.emoji
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.extensions.event
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
-import dev.kord.cache.api.data.description
+import dev.kord.common.Color
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.AuditLogChangeKey
+import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.interaction.edit
 import dev.kord.core.entity.interaction.PublicFollowupMessage
-import dev.kord.rest.builder.message.create.allowedMentions
+import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.rest.builder.message.create.embed
 import dev.kord.rest.builder.message.modify.embed
+import kotlinx.coroutines.flow.toList
 import template.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -212,14 +215,14 @@ class Maine : Extension() {
             guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
             action {
                 val song = RandomAPI.lyrics(song = arguments.lyrics)
-                if(song.lyrics.length >= 2000) {
+                if (song.lyrics.length >= 2000) {
                     respond {
                         embed {
-                            description = "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                            description =
+                                "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
                         }
                     }
-                }
-                else {
+                } else {
                     respond {
                         embed {
                             title = song.title
@@ -239,8 +242,22 @@ class Maine : Extension() {
             }
 
         }
-    }
+        event<MessageCreateEvent> {
+            action {
+                if (kord.getSelf() in this.event.message.mentionedUsers.toList()) {
+                    event.message.channel.createMessage {
+                        embed {
+                            image = "https://i.imgflip.com/3ia3r2.png"
+                            this.color = Color(red = 193, green = 0, blue = 238)
+                        }
+                    }
+                }
+            }
 
+
+        }
+
+    }
     inner class HugArgs : Arguments() {
         val receiver by optionalUser(
             "receiver",
@@ -257,4 +274,7 @@ class Maine : Extension() {
         )
     }
 }
+
+
+
 
