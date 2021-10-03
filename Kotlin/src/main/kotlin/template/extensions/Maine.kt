@@ -140,6 +140,7 @@ class Maine : Extension() {
                             action {
                                 image = Unsplash.randomSearch(query = "Pineapple")
                                 message.edit {
+                                    this.content = "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
                                     this.embed {
                                         this.image = image.urls.regular
                                         color = Color(56, 143, 59)
@@ -180,6 +181,7 @@ class Maine : Extension() {
                             action {
                                 image = Unsplash.randomSearch(query = "Melon")
                                 message.edit {
+                                    this.content = "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
                                     this.embed {
                                         this.image = image.urls.regular
                                         color = Color(255, 178, 36)
