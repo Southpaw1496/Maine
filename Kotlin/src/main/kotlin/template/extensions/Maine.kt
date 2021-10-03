@@ -57,7 +57,7 @@ class Maine : Extension() {
                         }
                         publicButton {
                             label = "Get a new cat"
-                            emoji("🐈")
+                            emoji("🐱")
                             action {
                                 message.edit {
                                     this.embed {
