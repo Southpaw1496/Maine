@@ -47,6 +47,7 @@ class Maine : Extension() {
                 message = respond {
                     embed {
                         image = CatAPI.random()
+                        color = Color(255, 54, 54)
                     }
                     components(Duration.seconds(300)) {
                         onTimeout {
@@ -61,6 +62,7 @@ class Maine : Extension() {
                                 message.edit {
                                     this.embed {
                                         image = CatAPI.random()
+                                        color = Color(255, 54, 54)
                                     }
                                 }
                             }
@@ -85,6 +87,7 @@ class Maine : Extension() {
                 message = respond {
                     embed {
                         image = DogAPI.random()
+                        color = Color(255, 54, 54)
                     }
                     components(Duration.seconds(300)) {
                         onTimeout {
@@ -99,6 +102,7 @@ class Maine : Extension() {
                                 message.edit {
                                     this.embed {
                                         image = DogAPI.random()
+                                        color = Color(255, 54, 54)
                                     }
                                 }
                             }
@@ -120,6 +124,7 @@ class Maine : Extension() {
                 message = respond {
                     embed {
                         this.image = image.urls.regular
+                        color = Color(56, 143, 59)
                     }
                     this.content =
                         "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
@@ -137,6 +142,7 @@ class Maine : Extension() {
                                 message.edit {
                                     this.embed {
                                         this.image = image.urls.regular
+                                        color = Color(56, 143, 59)
                                     }
                                 }
                             }
@@ -158,6 +164,7 @@ class Maine : Extension() {
                 message = respond {
                     embed {
                         this.image = image.urls.regular
+                        color = Color(255, 178, 36)
                     }
                     this.content =
                         "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
@@ -175,6 +182,7 @@ class Maine : Extension() {
                                 message.edit {
                                     this.embed {
                                         this.image = image.urls.regular
+                                        color = Color(255, 178, 36)
                                     }
                                 }
                             }
@@ -195,13 +203,14 @@ class Maine : Extension() {
                         content = "${user.mention} Have a special hug from me ❤️"
                         embed {
                             image = "https://c.tenor.com/eAKshP8ZYWAAAAAC/cat-love.gif"
+                            color = Color(255, 217, 217)
                         }
 
                     } else {
                         content = "${arguments.receiver!!.mention} Have a hug from ${user.mention}"
                         embed {
-                            image =
-                                "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
+                            image = "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
+                            color = Color(255, 217, 217)
                         }
                     }
                 }
@@ -218,13 +227,14 @@ class Maine : Extension() {
                 if (song.lyrics.length >= 2000) {
                     respond {
                         embed {
-                            description =
-                                "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                            description = "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                            this.color = Color(242, 201, 17)
                         }
                     }
                 } else {
                     respond {
                         embed {
+                            this.color = Color(242, 201, 17)
                             title = song.title
                             author {
                                 name = song.author
