@@ -6,9 +6,9 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 
-    id("com.github.jakemarsden.git-hooks")
+    // id("com.github.jakemarsden.git-hooks")
     id("com.github.johnrengelman.shadow")
-    id("io.gitlab.arturbosch.detekt")
+    // id("io.gitlab.arturbosch.detekt")
 }
 
 group = "template"
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    detektPlugins(libs.detekt)
+    // detektPlugins(libs.detekt)
 
     implementation(libs.kord.extensions)
     implementation(libs.kotlin.stdlib)
@@ -42,11 +42,11 @@ application {
     mainClassName = "template.AppKt"
 }
 
-gitHooks {
+/* gitHooks {
     setHooks(
         mapOf("pre-commit" to "detekt")
     )
-}
+} */
 
 tasks.withType<KotlinCompile> {
     // Current LTS version of Java
@@ -69,7 +69,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-detekt {
+/*detekt {
     buildUponDefaultConfig = true
     config = rootProject.files("detekt.yml")
-}
+}*/
