@@ -9,12 +9,11 @@ import dev.kord.common.entity.Snowflake
 import template.extensions.Maine
 import template.extensions.TestExtension
 
-val TEST_SERVER_ID = Snowflake(
-    env("TEST_SERVER").toLong() // Get the test server ID from the env vars or a .env fileerver ID from the env vars or a .env file
+val TEST_SERVER_ID = Snowflake(env("TEST_SERVER").toLong() // Get the test server ID from the env vars or a .env fileerver ID from the env vars or a .env file
         ?: error("Env var TEST_SERVER not provided")
 )
 
-private val TOKEN = env("TOKEN")   // Get the bot' token from the env vars or a .env file
+private val TOKEN = env("TOKEN") // Get the bot' token from the env vars or a .env file
     ?: error("Env var TOKEN not provided")
 
 suspend fun main() {

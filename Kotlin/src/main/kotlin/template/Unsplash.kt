@@ -30,34 +30,34 @@ data class UnsplashRandom(
     val downloads: Int,
 ) {
     @Serializable
-    data class Urls (
+    data class Urls(
         val raw: String,
         val full: String,
         val regular: String,
         val small: String,
         val thumb: String,
-            )
+    )
     @Serializable
-    data class Links (
+    data class Links(
         val self: String?,
         val html: String?,
         val download: String?,
         val download_location: String?,
-        )
+    )
     @Serializable
-    data class User (
+    data class User(
         val id: String?,
         val username: String?,
-            )
+    )
     @Serializable
-    data class Exif (
+    data class Exif(
         val make: String?,
         val model: String?,
         val exposure_time: String?,
         val aperture: String?,
         var focal_length: String?,
         var iso: Int?
-            )
+    )
 }
 
 object Unsplash {

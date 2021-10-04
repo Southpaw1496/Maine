@@ -6,7 +6,6 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class Dog(
     val categories: List<Category> = listOf(),

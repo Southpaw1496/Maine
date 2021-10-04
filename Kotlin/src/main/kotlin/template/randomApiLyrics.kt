@@ -1,6 +1,5 @@
 package template
 
-import dev.kord.cache.api.Link
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.get
@@ -40,7 +39,6 @@ object RandomAPI {
         return http.get("https://some-random-api.ml/lyrics") {
             parameter("title", song)
         }
-
 
     }
 }

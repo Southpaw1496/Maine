@@ -12,7 +12,6 @@ import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.common.Color
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AuditLogChangeKey
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.interaction.edit
 import dev.kord.core.entity.interaction.PublicFollowupMessage
@@ -35,14 +34,10 @@ class Maine : Extension() {
             name = "Cat"
             description = "Get a random cat picture from the Cat API"
 
-
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
-
             action {
                 // Because of the DslMarker annotation KordEx uses, we need to grab Kord explicitly
                 val kord = this@Maine.kord
                 lateinit var message: PublicFollowupMessage
-
 
                 message = respond {
                     embed {
@@ -75,14 +70,10 @@ class Maine : Extension() {
             name = "Dog"
             description = "Get a random cat picture from the Dog API"
 
-
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
-
             action {
                 // Because of the DslMarker annotation KordEx uses, we need to grab Kord explicitly
                 val kord = this@Maine.kord
                 lateinit var message: PublicFollowupMessage
-
 
                 message = respond {
                     embed {
@@ -115,8 +106,6 @@ class Maine : Extension() {
             name = "Pineapple"
             description = "Get a random pineapple from Unsplash"
 
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
-
             action {
                 lateinit var message: PublicFollowupMessage
                 var image = Unsplash.randomSearch(query = "Pineapple")
@@ -140,7 +129,9 @@ class Maine : Extension() {
                             action {
                                 image = Unsplash.randomSearch(query = "Pineapple")
                                 message.edit {
-                                    this.content = "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
+                                    this.content =
+                                        "Photo by [${image.user.username}](${image.links.html}) on " +
+                                                "p[Unsplash](https://unsplash.com)"
                                     this.embed {
                                         this.image = image.urls.regular
                                         color = Color(56, 143, 59)
@@ -155,8 +146,6 @@ class Maine : Extension() {
         publicSlashCommand {
             name = "Melon"
             description = "Get a random melon from Unsplash"
-
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
 
             action {
                 lateinit var message: PublicFollowupMessage
@@ -181,7 +170,9 @@ class Maine : Extension() {
                             action {
                                 image = Unsplash.randomSearch(query = "Melon")
                                 message.edit {
-                                    this.content = "Photo by [${image.user.username}](${image.links.html}) on [Unsplash](https://unsplash.com)"
+                                    this.content =
+                                        "Photo by [${image.user.username}](${image.links.html}) on " +
+                                                "[Unsplash](https://unsplash.com)"
                                     this.embed {
                                         this.image = image.urls.regular
                                         color = Color(255, 178, 36)
@@ -193,12 +184,10 @@ class Maine : Extension() {
                 }
             }
         }
-        publicSlashCommand(::HugArgs)
-        {
+        publicSlashCommand(::HugArgs) {
             name = "hug"
             description = "Give someone a hug or receive one from Maine"
 
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
             action {
                 respond {
                     if (arguments.receiver == null || arguments.receiver == user) {
@@ -207,29 +196,28 @@ class Maine : Extension() {
                             image = "https://c.tenor.com/eAKshP8ZYWAAAAAC/cat-love.gif"
                             color = Color(255, 217, 217)
                         }
-
                     } else {
                         content = "${arguments.receiver!!.mention} Have a hug from ${user.mention}"
                         embed {
-                            image = "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
+                            image =
+                                "https://media1.tenor.com/images/2d4138c7c24d21b9d17f66a54ee7ea03/tenor.gif?itemid=12535134)"
                             color = Color(255, 217, 217)
                         }
                     }
                 }
             }
         }
-        publicSlashCommand(::LyricsArgs)
-        {
+        publicSlashCommand(::LyricsArgs) {
             name = "Lyrics"
             description = "Find the lyrics of a song from Genius"
 
-            guild(TEST_SERVER_ID)  // Otherwise it'll take an hour to update
             action {
                 val song = RandomAPI.lyrics(song = arguments.lyrics)
                 if (song.lyrics.length >= 2000) {
                     respond {
                         embed {
-                            description = "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                            description =
+                                "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
                             this.color = Color(242, 201, 17)
                         }
                     }
@@ -252,7 +240,6 @@ class Maine : Extension() {
                     }
                 }
             }
-
         }
         event<MessageCreateEvent> {
             action {
@@ -265,18 +252,14 @@ class Maine : Extension() {
                     }
                 }
             }
-
-
         }
-
     }
+
     inner class HugArgs : Arguments() {
         val receiver by optionalUser(
             "receiver",
             description = "Receiver of your hug",
         )
-
-
     }
 
     inner class LyricsArgs : Arguments() {
@@ -286,7 +269,3 @@ class Maine : Extension() {
         )
     }
 }
-
-
-
-
