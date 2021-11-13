@@ -217,7 +217,8 @@ class Maine : Extension() {
                     respond {
                         embed {
                             description =
-                                "The lyrics you requested are too long to fit in Discord, but you can view them directly on Genius [here](${song.links.genius}.)."
+                                "The lyrics you requested are too long to fit in Discord, " +
+                                        "but you can view them directly on Genius [here](${song.links.genius}.)."
                             this.color = Color(242, 201, 17)
                         }
                     }

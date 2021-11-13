@@ -34,7 +34,6 @@ suspend fun main() {
         }
 
         extensions {
-            add(::TestExtension)
             add(::Maine)
         }
     }
